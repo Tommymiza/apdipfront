@@ -1,0 +1,33 @@
+#contact {
+  padding-top: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    font-size: 2rem;
+    width: 70%;
+    text-align: center;
+    color: var(--theme);
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+}
+#formContact{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 50px;
+}
+@media screen and (max-width: 800px) {
+  #contact {
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+  #formContact{
+    width: 100%;
+  }
+}

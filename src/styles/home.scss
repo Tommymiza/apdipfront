@@ -1,0 +1,40 @@
+.title {
+  text-align: center;
+  width: 50%;
+}
+#home {
+  margin: 0 20px;
+  padding-top: 150px;
+}
+.title-h3 {
+  text-decoration: underline;
+}
+.axe {
+  border: 1px solid rgb(85, 82, 82);
+  padding: 10px;
+  width: calc(100% - 20px);
+  border-radius: 7px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+@media screen and (max-width: 760px) {
+  .title {
+    width: 80%;
+  }
+}
+#footer{
+  width: calc(100% - 40px);
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 50px;
+  flex-wrap: wrap;
+  align-items: center;
+  background: var(--backNavbar);
+  color: var(--colorNavbar);
+  img{
+    width: 150px;
+    height: 150px;
+  }
+}
