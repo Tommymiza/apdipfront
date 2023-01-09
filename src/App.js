@@ -23,7 +23,7 @@ function App() {
   const [activity, setActivity] = useState([]);
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
-  const server = "http://localhost:4422";
+  const server = "https://apdipback.vercel.app/";
 
   function login(data) {
     setUser(data);
