@@ -54,36 +54,34 @@ const AddAct = ({ close, setActivity, server, setNotif }) => {
     formdata.append("date", form.current.date.value);
     formdata.append("place", form.current.place.value);
     formdata.append("descri", form.current.descri.value);
-    setTimeout(() => {
-      Axios({
-        method: "post",
-        url: server + "/activity/add",
-        data: formdata,
-      })
-        .then((res) => {
-          Axios({
-            url: server + "/activity",
-            method: "get",
-          }).then((res) => {
-            setActivity(res.data);
-            setNotif({
-              severity: "success",
-              message: "Done!",
-            });
-            form.current.reset();
-            showimage();
-          });
-        })
-        .catch((err) => {
+    Axios({
+      method: "post",
+      url: server + "/activity/add",
+      data: formdata,
+    })
+      .then((res) => {
+        Axios({
+          url: server + "/activity",
+          method: "get",
+        }).then((res) => {
+          setActivity(res.data);
           setNotif({
-            severity: "error",
-            message: "Connection error!",
+            severity: "success",
+            message: "Done!",
           });
-        })
-        .finally(() => {
-          setLoad(false);
+          form.current.reset();
+          showimage();
         });
-    }, 1000);
+      })
+      .catch((err) => {
+        setNotif({
+          severity: "error",
+          message: "Connection error!",
+        });
+      })
+      .finally(() => {
+        setLoad(false);
+      });
   };
   return (
     <Dialog open={true}>

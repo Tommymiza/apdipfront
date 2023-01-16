@@ -91,52 +91,50 @@ const Navbar = () => {
     const form = document.getElementById("persForm");
     setLoad(true);
     var promise = [];
-    setTimeout(() => {
-      promise.push(
-        Axios({
-          url: server + "/commande/add",
-          method: "post",
-          data: {
-            list: panier,
-            tel: form.phone.value,
-            place: form.adresse.value,
-            name: form.nom.value,
-          },
-        })
-      );
-      Promise.all(promise)
-        .then((res) => {
-          console.log(res);
-          if (res[0].data[0]?.data?.errno) {
-            var lis = "";
-            for (let index = 0; index < res[0].data.length; index++) {
-              lis = lis + res[0].data[index].name + ", ";
-            }
-            setNotif({ severity: "error", message: "Stock out for: " + lis });
-          } else {
-            setNotif({
-              severity: "success",
-              message: "Thank you for trusting us!",
-            });
+    promise.push(
+      Axios({
+        url: server + "/commande/add",
+        method: "post",
+        data: {
+          list: panier,
+          tel: form.phone.value,
+          place: form.adresse.value,
+          name: form.nom.value,
+        },
+      })
+    );
+    Promise.all(promise)
+      .then((res) => {
+        console.log(res);
+        if (res[0].data[0]?.data?.errno) {
+          var lis = "";
+          for (let index = 0; index < res[0].data.length; index++) {
+            lis = lis + res[0].data[index].name + ", ";
           }
-          Axios({
-            url: server + "/product",
-            method: "get",
-          }).then((res) => {
-            setProduct(res.data);
-            setPanier([]);
+          setNotif({ severity: "error", message: "Stock out for: " + lis });
+        } else {
+          setNotif({
+            severity: "success",
+            message: "Thank you for trusting us!",
           });
-        })
-        .catch((err) => {
-          console.log(err);
-          setNotif({ severity: "error", message: "Connection lost!" });
-        })
-        .finally(() => {
-          setLoad(false);
-          setOpen3(false);
-          setAnchor2();
+        }
+        Axios({
+          url: server + "/product",
+          method: "get",
+        }).then((res) => {
+          setProduct(res.data);
+          setPanier([]);
         });
-    }, 1000);
+      })
+      .catch((err) => {
+        console.log(err);
+        setNotif({ severity: "error", message: "Connection lost!" });
+      })
+      .finally(() => {
+        setLoad(false);
+        setOpen3(false);
+        setAnchor2();
+      });
   };
   function removepanier(id) {
     var temp = [];

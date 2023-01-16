@@ -27,35 +27,33 @@ const Card = ({ act }) => {
       setNotif({ severity: "warning", message: "Please enter correct value" });
     } else {
       setLoad(true);
-      setTimeout(()=>{
-        Axios({
-          url: server + "/activity/update",
-          method: "post",
-          data: {
-            title: document.getElementById("title" + a.id).value,
-            date: document.getElementById("date" + a.id).value,
-            place: document.getElementById("place" + a.id).value,
-            descri: document.getElementById("descri" + a.id).value,
-            id: a.id,
-          },
-        })
-          .then((res) => {
-            Axios({
-              url: server + "/activity",
-              method: "get",
-            }).then((res) => {
-              setActivity(res.data);
-              setLoad(false);
-              setNotif({
-                severity: "success",
-                message: "Update done successfully!",
-              });
+      Axios({
+        url: server + "/activity/update",
+        method: "post",
+        data: {
+          title: document.getElementById("title" + a.id).value,
+          date: document.getElementById("date" + a.id).value,
+          place: document.getElementById("place" + a.id).value,
+          descri: document.getElementById("descri" + a.id).value,
+          id: a.id,
+        },
+      })
+        .then((res) => {
+          Axios({
+            url: server + "/activity",
+            method: "get",
+          }).then((res) => {
+            setActivity(res.data);
+            setLoad(false);
+            setNotif({
+              severity: "success",
+              message: "Update done successfully!",
             });
-          })
-          .catch((err) => {
-            setNotif({ severity: "error", message: "Update failed!" });
           });
-      }, 1000)
+        })
+        .catch((err) => {
+          setNotif({ severity: "error", message: "Update failed!" });
+        });
     }
   }
   return (

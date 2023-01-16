@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -16,9 +16,11 @@ import { useNavigate } from "react-router-dom";
 
 const Connexion = ({ close }) => {
   const navigate = useNavigate();
+  const [load, setLoad] = useState(false);
   const { login, server, setNotif, setPanier } = useContext(ActContext);
   const log = (e) => {
     e.preventDefault();
+    setLoad(true);
     Axios({
       url: server + "/user",
       method: "get",
@@ -39,6 +41,11 @@ const Connexion = ({ close }) => {
       })
       .catch((err) => {
         setNotif({ severity: "error", message: "Connection failed!" });
+      })
+      .finally(() => {
+        {
+          setLoad(false);
+        }
       });
   };
   return (
@@ -82,6 +89,7 @@ const Connexion = ({ close }) => {
               <LoadingButton
                 type="submit"
                 startIcon={<Login />}
+                loading={load}
                 sx={{
                   textTransform: "none",
                   fontFamily: "var(--fontText)",

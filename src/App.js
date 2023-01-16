@@ -33,31 +33,29 @@ function App() {
   function get() {
     setLoading(true);
     var promise = [];
-    setTimeout(() => {
-      promise.push(
-        Axios({
-          url: server + "/activity",
-          method: "get",
-        }).then((res) => {
-          setActivity(res.data);
-        })
-      );
-      promise.push(
-        Axios({
-          url: server + "/product",
-          method: "get",
-        }).then((res) => {
-          setProduct(res.data);
-        })
-      );
-      Promise.all(promise)
-        .catch((err) => {
-          setNotif({ severity: "error", message: "Connection error!" });
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }, 2000);
+    promise.push(
+      Axios({
+        url: server + "/activity",
+        method: "get",
+      }).then((res) => {
+        setActivity(res.data);
+      })
+    );
+    promise.push(
+      Axios({
+        url: server + "/product",
+        method: "get",
+      }).then((res) => {
+        setProduct(res.data);
+      })
+    );
+    Promise.all(promise)
+      .catch((err) => {
+        setNotif({ severity: "error", message: "Connection error!" });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
   useEffect(() => {
     if (notif) {

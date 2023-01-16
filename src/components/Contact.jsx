@@ -30,41 +30,39 @@ const Contact = () => {
         parseInt(f.captcha1.value) + parseInt(f.captcha2.value) ===
         parseInt(f.captcha3.value)
       ) {
-        setTimeout(() => {
-          Axios({
-            method: "post",
-            url: server + "/message/add",
-            data: {
-              nom: f.nom.value,
-              email: f.email.value,
-              phone: f.phone.value,
-              message: f.message.value,
-            },
+        Axios({
+          method: "post",
+          url: server + "/message/add",
+          data: {
+            nom: f.nom.value,
+            email: f.email.value,
+            phone: f.phone.value,
+            message: f.message.value,
+          },
+        })
+          .then((res) => {
+            if (res.data.errno) {
+              setNotif({
+                severity: "error",
+                message: res.data.sqlMessage,
+              });
+            } else {
+              setNotif({ severity: "success", message: "Message sent!" });
+              f.nom.value = "";
+              f.email.value = "";
+              f.phone.value = "";
+              f.message.value = "";
+            }
           })
-            .then((res) => {
-              if (res.data.errno) {
-                setNotif({
-                  severity: "error",
-                  message: res.data.sqlMessage,
-                });
-              } else {
-                setNotif({ severity: "success", message: "Message sent!" });
-                f.nom.value = "";
-                f.email.value = "";
-                f.phone.value = "";
-                f.message.value = "";
-              }
-            })
-            .catch((err) => {
-              setNotif({ severity: "error", message: "Connection error!" });
-            })
-            .finally(() => {
-              setX((Math.random().toFixed(2) * 100).toFixed(0));
-              setY((Math.random().toFixed(2) * 100).toFixed(0));
-              f.captcha3.value = null;
-              setLoading(false);
-            });
-        }, 1000);
+          .catch((err) => {
+            setNotif({ severity: "error", message: "Connection error!" });
+          })
+          .finally(() => {
+            setX((Math.random().toFixed(2) * 100).toFixed(0));
+            setY((Math.random().toFixed(2) * 100).toFixed(0));
+            f.captcha3.value = null;
+            setLoading(false);
+          });
       } else {
         setNotif({ severity: "error", message: "Captcha error!" });
         setX((Math.random().toFixed(2) * 100).toFixed(0));

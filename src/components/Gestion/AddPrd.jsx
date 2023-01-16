@@ -54,7 +54,6 @@ const AddPrd = ({ close, setProduct, server, setNotif }) => {
     formdata.append("price", form.current.price.value);
     formdata.append("unit", form.current.unit.value);
     formdata.append("stock", form.current.stock.value);
-    setTimeout(() => {
       Axios({
         method: "post",
         url: server + "/product/add",
@@ -83,7 +82,6 @@ const AddPrd = ({ close, setProduct, server, setNotif }) => {
         .finally(() => {
           setLoad(false);
         });
-    }, 1000);
   };
   return (
     <Dialog open={true}>

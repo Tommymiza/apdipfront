@@ -67,35 +67,33 @@ const Prd = ({ prd }) => {
       setNotif({ severity: "warning", message: "Please enter correct value" });
     } else {
       setLoad(true);
-      setTimeout(() => {
-        Axios({
-          url: server + "/product/update",
-          method: "post",
-          data: {
-            name: document.getElementById("name" + a.id).value,
-            price: document.getElementById("price" + a.id).value,
-            unit: document.getElementById("unit" + a.id).value,
-            stock: document.getElementById("stock" + a.id).value,
-            id: a.id,
-          },
-        })
-          .then((res) => {
-            Axios({
-              url: server + "/product",
-              method: "get",
-            }).then((res) => {
-              setProduct(res.data);
-              setLoad(false);
-              setNotif({
-                severity: "success",
-                message: "Update done successfully!",
-              });
+      Axios({
+        url: server + "/product/update",
+        method: "post",
+        data: {
+          name: document.getElementById("name" + a.id).value,
+          price: document.getElementById("price" + a.id).value,
+          unit: document.getElementById("unit" + a.id).value,
+          stock: document.getElementById("stock" + a.id).value,
+          id: a.id,
+        },
+      })
+        .then((res) => {
+          Axios({
+            url: server + "/product",
+            method: "get",
+          }).then((res) => {
+            setProduct(res.data);
+            setLoad(false);
+            setNotif({
+              severity: "success",
+              message: "Update done successfully!",
             });
-          })
-          .catch((err) => {
-            setNotif({ severity: "error", message: "Update failed!" });
           });
-      }, 1000);
+        })
+        .catch((err) => {
+          setNotif({ severity: "error", message: "Update failed!" });
+        });
     }
   }
   return (
